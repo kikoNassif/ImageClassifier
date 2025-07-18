@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
 import streamlit as st
-from tenserflow.keras.applications.mobilenet_v2 import (
-  MobileNetV2,
-  preprocess_input,
-  decode_predictions    
+from tensorflow.keras.applications.mobilenet_v2 import (
+    MobileNetV2,
+    preprocess_input,
+    decode_predictions
 )
 from PIL import Image
 
@@ -31,7 +31,9 @@ def classify_image(model, image):
     
 def main():
     st.set_page_config(page_title="AI Image Classifier", page_icon="🖼️", layout="centered")
-    st.title("Upload an Image and let AI Classify It!")
+
+    st.title("Upload an Image and let AI Classify It! 🖼️")
+    st.write("Upload an image and let AI tell you what it is!")
 
     @st.cache_resource
     def load_cashed_model():
@@ -50,12 +52,12 @@ def main():
         if btn:
             with st.spinner("Analyzing Image..."):
                 image = Image.open(uploaded_file)
-                predictions = classify_image(image)
+                predictions = classify_image(model, image)
 
                 if predictions:
                     st.subheader("Predictions:")
                     for _, label, score in predictions:
                         st.write(f"**{label}**: {score:.2%}")
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
